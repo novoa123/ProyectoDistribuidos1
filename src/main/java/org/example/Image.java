@@ -3,8 +3,12 @@ package org.example;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+
+// Clase para manejar lectura, conversion y escritura de imágenes
+// Maneja la conversion a escala de grises y RGB
 
 public class Image {
 
@@ -12,10 +16,15 @@ public class Image {
     private int ancho;
     private int largo;
 
-    public Image(String path) throws IOException {
-        this.image = ImageIO.read(new File(path));
-        this.ancho = image.getWidth();
-        this.largo = image.getHeight();
+    public Image(String resourcePath) throws IOException {
+        try (InputStream is = getClass().getResourceAsStream(resourcePath)) {
+            if (is == null) {
+                throw new IOException("No se encontró la imagen en resources: " + resourcePath);
+            }
+            this.image = ImageIO.read(is);
+            this.ancho = image.getWidth();
+            this.largo = image.getHeight();
+        }
     }
 
 
@@ -78,5 +87,13 @@ public class Image {
         }
 
         ImageIO.write(output, "png", new File(outputPath));
+    }
+
+    public int getAncho() {
+        return ancho;
+    }
+
+    public int getLargo() {
+        return largo;
     }
 }

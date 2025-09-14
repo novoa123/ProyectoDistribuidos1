@@ -1,0 +1,11 @@
+Elemento,Operación,Tiempo Seq (ns),Tiempo Par (ns),Ancho,Alto,Speedup,Threads,Memoria (bytes)
+Erosión,Esquina Superior Derecha,45,22,436,348,2,05,16,34718512
+Dilatación,Esquina Superior Derecha,54,32,436,348,1,69,16,51495728
+Erosión,Esquina Inferior Derecha,27,24,436,348,1,13,16,37203232
+Dilatación,Esquina Inferior Derecha,27,19,436,348,1,42,16,53762376
+Erosión,Superior,32,26,436,348,1,23,16,78928200
+Dilatación,Superior,24,25,436,348,0,96,16,95705336
+Erosión,Medio,16,14,436,348,1,14,16,121089312
+Dilatación,Medio,13,10,436,348,1,30,16,137648456
+Erosión,Cruz,15,12,436,348,1,25,16,162814280
+Dilatación,Cruz,14,11,436,348,1,27,16,179591416
