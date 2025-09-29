@@ -3,20 +3,20 @@ package org.example;
 public class MatrizComparator {
 
     public static boolean comparar(int[][][] matriz1, int[][][] matriz2) {
-        // Verificar dimensiones
+        // verifica que las dimensiones sean iguales
         if (matriz1.length != matriz2.length) {
             System.out.println("Error: Número de canales diferente");
             return false;
         }
         
-        // Comparar cada canal
+        // compara cada canal 
         for (int c = 0; c < matriz1.length; c++) {
             if (matriz1[c].length != matriz2[c].length) {
                 System.out.println("Error: Altura diferente en canal " + c);
                 return false;
             }
-            
-            // Comparar cada píxel
+
+            // compara cada pixel
             for (int y = 0; y < matriz1[c].length; y++) {
                 if (matriz1[c][y].length != matriz2[c][y].length) {
                     System.out.println("Error: Ancho diferente en canal " + c + ", fila " + y);
@@ -24,7 +24,7 @@ public class MatrizComparator {
                 }
                 
                 for (int x = 0; x < matriz1[c][y].length; x++) {
-                    // Si encontramos una diferencia, reportarla
+                    // ssi se encuentra una diferencia, se imprime la posicion y los valores
                     if (matriz1[c][y][x] != matriz2[c][y][x]) {
                         String channelName = c == 0 ? "Rojo" : (c == 1 ? "Verde" : "Azul");
                         System.out.println("Diferencia encontrada en canal " + channelName + 
@@ -40,10 +40,9 @@ public class MatrizComparator {
     
     public static void compararMatrices(int[][][] sequential, int[][][] parallel) {
         if (comparar(sequential, parallel)) {
-            System.out.println("✓ Verificación exitosa: resultados idénticos");
+            System.out.println(" Verificacion exitosa: resultados identicos");
         } else {
-            System.out.println("✗ Error: los resultados difieren entre versión secuencial y paralela");
-            System.out.println("  Esto indica un problema en la implementación paralela");
+            System.out.println(" Error: los resultados difieren entre version secuencial y paralela");
         }
     }
     
