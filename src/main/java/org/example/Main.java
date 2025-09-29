@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -25,6 +26,48 @@ public class Main {
         }
 
         scanner.close();
+    }
+
+    /**
+     * Método para limpiar la carpeta de resultados eliminando todas las imágenes existentes
+     */
+    private static void limpiarCarpetaResultados() {
+        File carpetaResultados = new File("resultados");
+        
+        // Si la carpeta no existe, la creamos
+        if (!carpetaResultados.exists()) {
+            carpetaResultados.mkdirs();
+            System.out.println("Carpeta 'resultados' creada.");
+            return;
+        }
+        
+        // Obtenemos todos los archivos de la carpeta
+        File[] archivos = carpetaResultados.listFiles();
+        
+        if (archivos != null) {
+            int archivosEliminados = 0;
+            for (File archivo : archivos) {
+                // Solo eliminamos archivos (no carpetas) con extensiones de imagen
+                if (archivo.isFile() && 
+                    (archivo.getName().toLowerCase().endsWith(".png") ||
+                     archivo.getName().toLowerCase().endsWith(".jpg") ||
+                     archivo.getName().toLowerCase().endsWith(".jpeg"))) {
+                    
+                    if (archivo.delete()) {
+                        archivosEliminados++;
+                        System.out.println("Eliminado: " + archivo.getName());
+                    } else {
+                        System.out.println("No se pudo eliminar: " + archivo.getName());
+                    }
+                }
+            }
+            
+            if (archivosEliminados > 0) {
+                System.out.println("Se eliminaron " + archivosEliminados + " imágenes de la carpeta resultados.");
+            } else {
+                System.out.println("No se encontraron imágenes para eliminar en la carpeta resultados.");
+            }
+        }
     }
 
     private static void ejecutarOperacionIndividual(Scanner scanner) {
@@ -124,7 +167,9 @@ public class Main {
                 return;
             }
 
-            String outputPath = "output_" + 
+            limpiarCarpetaResultados();
+
+            String outputPath = "resultados/output_" + 
                                (opcionOperacion == 1 ? "erosion" : "dilation") + "_" +
                                System.currentTimeMillis() + ".png";
             procesador.matrizRGBaImagen(resultado, outputPath);
@@ -165,6 +210,10 @@ public class Main {
 
         ResultadosExperimento resultados = new ResultadosExperimento();
 
+        // Limpiar la carpeta de resultados antes de iniciar el experimento
+        System.out.println("Limpiando carpeta de resultados...");
+        limpiarCarpetaResultados();
+        
         System.out.println("Iniciando experimento...");
 
         for (int i = 0; i < estructurantes.length; i++) {
