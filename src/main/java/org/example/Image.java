@@ -9,17 +9,19 @@ import javax.imageio.ImageIO;
 
 // clase para manejar lectura y  conversion de las imagenes
 // se maneja la conversion RGB
-
 public class Image {
 
     private BufferedImage image;
     private int ancho;
     private int largo;
 
-    public Image(String resourcePath) throws IOException {
-        try (InputStream is = getClass().getResourceAsStream(resourcePath)) {
+    // busca en /img/ tomando solo el nombre de archivo
+    public Image(String rutaUsuario) throws IOException {
+        String nombre = extraerNombreArchivo(rutaUsuario);
+        String rutaClasspath = "/img/" + nombre;
+        try (InputStream is = Image.class.getResourceAsStream(rutaClasspath)) {
             if (is == null) {
-                throw new IOException("No se encontró la imagen en resources: " + resourcePath);
+                throw new IOException("No se encontró la imagen en resources/img: " + nombre);
             }
             this.image = ImageIO.read(is);
             this.ancho = image.getWidth();
@@ -27,6 +29,13 @@ public class Image {
         }
     }
 
+    // extrae solo el nombre del archivo
+    private static String extraerNombreArchivo(String s) {
+        if (s == null) return "";
+        s = s.replace('\\', '/');
+        int i = s.lastIndexOf('/');
+        return (i >= 0) ? s.substring(i + 1) : s;
+    }
 
     public int[][][] toMatrizRGB(){
         int[][][] rgbMatriz = new int[3][largo][ancho];
