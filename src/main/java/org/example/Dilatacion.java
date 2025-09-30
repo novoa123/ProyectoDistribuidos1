@@ -11,30 +11,28 @@ package org.example;
 
 public class Dilatacion extends Morfologia {
 
-    public Dilatacion(int[][] matriz, Estructurante estructurante) {
-        super(matriz, estructurante);
+    public Dilatacion(int[][] matriz, Estructurante ee) {
+        super(matriz, ee);
+    }
+
+    public Dilatacion(int[][] matriz, Estructurante ee, int threshold) {
+        super(matriz, ee, threshold);
     }
 
     @Override
     protected int operacion(int x, int y) {
         int max = Integer.MIN_VALUE;
-        int[][] kernel = estructurante.getKernel();
-
         for (int ky = 0; ky < estructurante.getHeight(); ky++) {
             for (int kx = 0; kx < estructurante.getWidth(); kx++) {
-                if (kernel[ky][kx] == 1) {
-                    int imageX = x + kx - estructurante.getCenterX();
-                    int imageY = y + ky - estructurante.getCenterY();
-                    
-                    if (imageX >= 0 && imageX < matriz[0].length && 
-                        imageY >= 0 && imageY < matriz.length) {
-                        max = Math.max(max, matriz[imageY][imageX]);
+                if (estructurante.getKernel()[ky][kx] == 1) {
+                    int ix = x + kx - estructurante.getCenterX();
+                    int iy = y + ky - estructurante.getCenterY();
+                    if (ix >= 0 && ix < width && iy >= 0 && iy < height) {
+                        max = Math.max(max, matriz[iy][ix]);
                     }
                 }
-               
             }
         }
-
-        return max == Integer.MIN_VALUE ? matriz[y][x] : max;
+        return (max == Integer.MIN_VALUE) ? matriz[y][x] : max;
     }
 }

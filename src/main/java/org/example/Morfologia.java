@@ -1,91 +1,76 @@
 package org.example;
 
 import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.RecursiveTask;
+import java.util.concurrent.RecursiveAction;
+
 
 // clase base para operaciones morfológicas (erosion / dilatacion)
 // define estructura comun y metodos para correr en forma secuencial o paralela
 
 public abstract class Morfologia {
-    protected int [][] matriz; // matriz original (imagen o canal)
-    protected Estructurante estructurante; // elemento estructurante usado en la operacion
-    protected int [][] resultado;     // matriz donde se guarda el resultado final
+ protected final int[][] matriz;        // entrada (solo lectura)
+    protected final Estructurante estructurante;
+    protected final int[][] resultado;     // salida (escritura)
+    protected final int height, width;
+    protected final int threshold;         // filas por bloque
 
- 
+    // ctor por defecto (threshold=100)
     public Morfologia(int[][] matriz, Estructurante estructurante) {
+        this(matriz, estructurante, 100);
+    }
+
+    // ctor con threshold configurable
+    public Morfologia(int[][] matriz, Estructurante estructurante, int threshold) {
         this.matriz = matriz;
         this.estructurante = estructurante;
-        this.resultado = new int[matriz.length][matriz[0].length];
+        this.height = matriz.length;
+        this.width = matriz[0].length;
+        this.resultado = new int[height][width];
+        this.threshold = (threshold > 0 ? threshold : 100);
     }
 
-    // calcula valor nuevo de un pixel
+    // operación concreta (erosión/dilatación)
     protected abstract int operacion(int x, int y);
 
-    // recorre toda la matriz pixel a pixel
+    // versión secuencial: recorre todo pixel a pixel
     public int[][] aplicarSecuencial() {
-        long tiempoInicio = System.currentTimeMillis(); // inicia medicion
-
-        // primero recorre filas, luego columnas
-        for (int y = 0; y < matriz.length; y++) {
-            for (int x = 0; x < matriz[0].length; x++) {
-                resultado[y][x] = operacion(x, y); // aplica cambio al pixel
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                resultado[y][x] = operacion(x, y);
             }
         }
-
-        long tiempoFin = System.currentTimeMillis(); 
-        System.out.println("Tiempo de ejecución secuencial: " + (tiempoFin - tiempoInicio) + " ms");
-        return resultado; // devuelve la imagen procesada
+        return resultado;
     }
 
-    // porcion paralela, divide el trabajo por rangos de filas
-    public int[][] aplicarParalelo() {
-        long tiempoInicio = System.currentTimeMillis(); // inicia medicion
-
-        ForkJoinPool pool = new ForkJoinPool(); // crea grupo de hilos
-        MorfologiaTask task = new MorfologiaTask(0, matriz.length); // tarea raiz con todas las filas
-        pool.invoke(task); // lanza ejecucion
-        pool.shutdown(); // cierra uso del pool
-
-        long tiempoFin = System.currentTimeMillis(); // termina medicion
-        System.out.println("Tiempo de ejecución paralelo: " + (tiempoFin - tiempoInicio) + " ms");
-        return resultado; // devuelve la imagen procesada
+    // versión paralela con pool externo (fork/join por filas)
+    public int[][] aplicarParalelo(ForkJoinPool pool) {
+        pool.invoke(new MorfologiaTask(0, height));
+        return resultado;
     }
 
-    // tarea recursiva: parte el rango de filas hasta un tamaño pequeño
-    private class MorfologiaTask extends RecursiveTask<Void> {
-        private static final int THRESHHOLD = 100; // umbral simple para decidir dividir
-        private int startRow; // fila inicial incluida
-        private int endRow;   // fila final excluida
+    // versión paralela con pool interno (fork/join por filas)
+    private class MorfologiaTask extends RecursiveAction {
+        private final int startRow, endRow;
 
-        // guarda el rango a trabajar
-        public MorfologiaTask(int startRow, int endRow) {
+        MorfologiaTask(int startRow, int endRow) {
             this.startRow = startRow;
             this.endRow = endRow;
         }
 
-        // ejecuta la tarea: procesa directo o divide en dos
         @Override
-        protected Void compute() {
-            // si el bloque es pequeño se procesa directamente
-            if (endRow - startRow <= THRESHHOLD) {
+        protected void compute() {
+            int rows = endRow - startRow;
+            if (rows <= threshold) {
                 for (int y = startRow; y < endRow; y++) {
-                    for (int x = 0; x < matriz[0].length; x++) {
-                        resultado[y][x] = operacion(x, y); // aplica operacion al pixel
+                    for (int x = 0; x < width; x++) {
+                        resultado[y][x] = operacion(x, y);
                     }
                 }
             } else {
-                // si es grande se parte el rango en dos mitades
-                int mid = startRow + (endRow - startRow) / 2;
-                MorfologiaTask task1 = new MorfologiaTask(startRow, mid); // primera mitad
-                MorfologiaTask task2 = new MorfologiaTask(mid, endRow);   // segunda mitad
-                
-                task1.fork(); // lanza primera
-                task2.fork(); // lanza segunda
-
-                task1.join(); // espera primera
-                task2.join(); // espera segunda
+                int mid = startRow + rows / 2;
+                invokeAll(new MorfologiaTask(startRow, mid),
+                          new MorfologiaTask(mid, endRow));
             }
-            return null; // no devuelve dato (solo efectos en 'resultado')
         }
     }
 }
