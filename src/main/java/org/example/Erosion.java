@@ -1,13 +1,5 @@
 package org.example;
 
-// Clase que implementa la operación de Erosión morfológica
-// Hereda de la clase base Morfologia
-// Implementa el método abstracto 'operacion' para definir la lógica específica de la erosión
-// La erosión reduce las regiones brillantes en una imagen, eliminando píxeles en los bordes de las regiones
-// Utiliza el elemento estructurante para determinar cómo se aplica la erosión en la imagen
-// El valor de cada píxel en la imagen resultante es el valor mínimo de los píxeles cubiertos por el elemento estructurante
-// Maneja los bordes de la imagen utilizando padding con valor máximo
-// Si el elemento estructurante no cubre ningún píxel válido, se mantiene el valor original del píxel
 
 public class Erosion extends Morfologia {
     

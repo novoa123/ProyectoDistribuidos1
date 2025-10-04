@@ -28,26 +28,24 @@ public class Main {
         scanner.close();
     }
 
-    /**
-     * Método para limpiar la carpeta de resultados eliminando todas las imágenes existentes
-     */
+  
     private static void limpiarCarpetaResultados() {
         File carpetaResultados = new File("resultados");
         
-        // Si la carpeta no existe, la creamos
+        // si no existe, al carpeta de imahenes, se crea
         if (!carpetaResultados.exists()) {
             carpetaResultados.mkdirs();
             System.out.println("Carpeta 'resultados' creada.");
             return;
         }
         
-        // Obtenemos todos los archivos de la carpeta
+        // se obtienen los archvivos de la carpeta
         File[] archivos = carpetaResultados.listFiles();
         
         if (archivos != null) {
             int archivosEliminados = 0;
             for (File archivo : archivos) {
-                // Solo eliminamos archivos (no carpetas) con extensiones de imagen
+                // solo se eliminan archivos de formatos para imagen
                 if (archivo.isFile() && 
                     (archivo.getName().toLowerCase().endsWith(".png") ||
                      archivo.getName().toLowerCase().endsWith(".jpg") ||
@@ -70,6 +68,7 @@ public class Main {
         }
     }
 
+    //se ejecuta solamente una operacion individual
     private static void ejecutarOperacionIndividual(Scanner scanner) {
         try {
             System.out.println("--- Operación Individual ---");
@@ -180,6 +179,7 @@ public class Main {
         }
     }
 
+
     private static void ejecutarExperimentoCompleto(Scanner scanner) {
         try {
             System.out.println("--- Experimento Completo ---");
@@ -210,7 +210,7 @@ public class Main {
 
         ResultadosExperimento resultados = new ResultadosExperimento();
 
-        // Limpiar la carpeta de resultados antes de iniciar el experimento
+        // se limpia la carpeta de resultados antes de comenzar
         System.out.println("Limpiando carpeta de resultados...");
         limpiarCarpetaResultados();
         

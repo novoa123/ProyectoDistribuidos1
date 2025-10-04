@@ -8,7 +8,7 @@ import java.util.concurrent.RecursiveAction;
 // define estructura comun y metodos para correr en forma secuencial o paralela
 
 public abstract class Morfologia {
- protected final int[][] matriz;        // entrada (solo lectura)
+    protected final int[][] matriz;        // entrada (solo lectura)
     protected final Estructurante estructurante;
     protected final int[][] resultado;     // salida (escritura)
     protected final int height, width;
@@ -32,7 +32,7 @@ public abstract class Morfologia {
     // operación concreta (erosión/dilatación)
     protected abstract int operacion(int x, int y);
 
-    // versión secuencial: recorre todo pixel a pixel
+    // recorre todo pixel a pixel
     public int[][] aplicarSecuencial() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -42,7 +42,7 @@ public abstract class Morfologia {
         return resultado;
     }
 
-    // versión paralela con pool externo (fork/join por filas)
+    // versión paralela 
     public int[][] aplicarParalelo(ForkJoinPool pool) {
         pool.invoke(new MorfologiaTask(0, height));
         return resultado;

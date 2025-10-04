@@ -24,7 +24,7 @@ public class MatrizComparator {
                 }
                 
                 for (int x = 0; x < matriz1[c][y].length; x++) {
-                    // ssi se encuentra una diferencia, se imprime la posicion y los valores
+                    // si se encuentra una diferencia, se imprime la posicion y los valores
                     if (matriz1[c][y][x] != matriz2[c][y][x]) {
                         String channelName = c == 0 ? "Rojo" : (c == 1 ? "Verde" : "Azul");
                         System.out.println("Diferencia encontrada en canal " + channelName + 
@@ -37,7 +37,7 @@ public class MatrizComparator {
         }
         return true;
     }
-    
+    // metodo para comparar dos matrices 3D e imprimir si son iguales o no (solo imprime el resultado)
     public static void compararMatrices(int[][][] sequential, int[][][] parallel) {
         if (comparar(sequential, parallel)) {
             System.out.println(" Verificacion exitosa: resultados identicos");

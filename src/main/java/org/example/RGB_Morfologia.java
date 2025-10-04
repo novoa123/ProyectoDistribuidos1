@@ -8,6 +8,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 
 public class RGB_Morfologia {
+
     // aplica erosion a rgb (3 hilos: r, g, b)
     public static int[][][] aplicarErosionRGB(int[][][] rgbMatriz,
                                               Estructurante ee,
@@ -16,7 +17,7 @@ public class RGB_Morfologia {
         int ancho = rgbMatriz[0][0].length;
         int[][][] out = new int[3][alto][ancho];
 
-        // 3 hilos fijos, uno por canal
+        // 3 hilos fijos, uno por cada canal de color
         ExecutorService exec = Executors.newFixedThreadPool(3);
 
         // pool fork/join compartido para las filas (solo si paralelo)
@@ -105,7 +106,7 @@ public class RGB_Morfologia {
         return out;
     }
 
-    // alias opcionales si en tu main los llamas como 'erosionRGB' o 'dilatacionRGB'
+    // métodos públicos para llamar desde fuera
     public static int[][][] erosionRGB(int[][][] rgbMatriz, Estructurante ee, boolean paralelo) {
         return aplicarErosionRGB(rgbMatriz, ee, paralelo);
     }

@@ -14,9 +14,9 @@ public class ResultadosExperimento {
         long parTime;       // Tiempo de ejecución paralelo en nanosegundos
         int width;          // Ancho de la imagen
         int height;         // Alto de la imagen
-        double speedup;     // Factor de mejora (tiempo_seq / tiempo_par)
-        int threads;        // Número de threads disponibles
-        long memoryUsed;    // Memoria utilizada en bytes
+        double speedup;    
+        int threads;       
+        long memoryUsed;    
 
         Resultado(String element, String operation, long seqTime, long parTime, int width, int height) {
             this.element = element;
@@ -25,11 +25,11 @@ public class ResultadosExperimento {
             this.parTime = parTime;
             this.width = width;
             this.height = height;
-            // Calcular speedup (mejora de rendimiento)
+            // calcula el speedup ( )
             this.speedup = (double) seqTime / parTime;
-            // Obtener número de procesadores disponibles
+            // obtiene el numero de procesadores disponibles
             this.threads = Runtime.getRuntime().availableProcessors();
-            // Estimar memoria utilizada
+            // estima la memoria utilziada
             Runtime runtime = Runtime.getRuntime();
             this.memoryUsed = runtime.totalMemory() - runtime.freeMemory();
         }

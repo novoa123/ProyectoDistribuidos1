@@ -6,7 +6,6 @@ public class Estructurante {
     private int centerX;
     private int centerY;
 
-    //Elementos definidos
 
     public static Estructurante CRUZ_3X3 () {
         int[][] kernel = {
