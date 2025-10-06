@@ -1,11 +1,11 @@
 Elemento,Operación,Tiempo Seq (ns),Tiempo Par (ns),Ancho,Alto,Speedup,Threads,Memoria (bytes)
-Erosión,Esquina Superior Derecha,27,13,436,348,2.08,12,26333768
-Dilatación,Esquina Superior Derecha,28,16,436,348,1.75,12,42020496
-Erosión,Esquina Inferior Derecha,36,29,436,348,1.24,12,18797128
-Dilatación,Esquina Inferior Derecha,37,16,436,348,2.31,12,33477192
-Erosión,Superior,23,15,436,348,1.53,12,56545864
-Dilatación,Superior,27,16,436,348,1.69,12,69128776
-Erosión,Medio,6,9,436,348,0.67,12,91582344
-Dilatación,Medio,5,9,436,348,0.56,12,105521384
-Erosión,Cruz,8,6,436,348,1.33,12,20148760
-Dilatación,Cruz,4,5,436,348,0.80,12,34828824
+Erosión,Estruct 1 -,45,12,436,348,3.75,16,31534736
+Dilatación,Estruct 1 -,29,18,436,348,1.61,16,48311952
+Erosión,Estruct 2 -,10,4,436,348,2.50,16,38069584
+Dilatación,Estruct 2 -,13,4,436,348,3.25,16,55580712
+Erosión,Estruct 3 -,19,13,436,348,1.46,16,83053464
+Dilatación,Estruct 3 -,17,11,436,348,1.55,16,101718056
+Erosión,Estruct 4 -,3,3,436,348,1.00,16,129190808
+Dilatación,Estruct 4 -,3,3,436,348,1.00,16,147855400
+Erosión,Estruct 5 -,4,3,436,348,1.33,16,175328152
+Dilatación,Estruct 5 -,4,3,436,348,1.33,16,193258832
