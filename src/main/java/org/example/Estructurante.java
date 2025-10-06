@@ -27,15 +27,6 @@ public class Estructurante {
         return new Estructurante(kernel, 1, 1);
     }
 
-    public static Estructurante LINEA_HORIZONTAL_3X3 () {
-        int[][] kernel = {
-            {0, 0, 0},
-            {1, 1, 1},
-            {0, 0, 0}
-        };
-
-        return new Estructurante(kernel, 1, 1);
-    }
 
     public static Estructurante LINEA_VERTICAL_3X3 () {
         int[][] kernel = {
@@ -49,9 +40,9 @@ public class Estructurante {
 
     public static Estructurante ESTRUCTURANTE_1 () {
         int[][] kernel = {
-            {0, 1, 1},
-            {0, 0, 1},
-            {0, 0, 0}
+            {0, 0, 0},
+            {1, 1, 0},
+            {0, 1, 0}
         };
 
         return new Estructurante(kernel, 1, 1);
@@ -59,9 +50,9 @@ public class Estructurante {
 
     public static Estructurante ESTRUCTURANTE_2 () {
         int[][] kernel = {
-            {0, 0, 0},
-            {0, 0, 1},
-            {0, 1, 1}
+            {0, 1, 0},
+            {1, 1, 0},
+            {0, 0, 0}
         };
 
         return new Estructurante(kernel, 1, 1);
@@ -69,8 +60,8 @@ public class Estructurante {
 
     public static Estructurante ESTRUCTURANTE_3 () {
         int[][] kernel = {
-            {1, 1, 1},
             {0, 0, 0},
+            {1, 1, 1},
             {0, 0, 0}
         };
 
@@ -79,9 +70,9 @@ public class Estructurante {
 
     public static Estructurante ESTRUCTURANTE_4 () {
         int[][] kernel = {
+            {0, 0, 0},
             {0, 1, 0},
-            {0, 1, 0},
-            {0, 0, 0}
+            {0, 1, 0}
         };
 
         return new Estructurante(kernel, 1, 1);
