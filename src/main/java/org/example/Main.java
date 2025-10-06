@@ -201,11 +201,11 @@ public class Main {
         };
 
         String[] nombresEstructurantes = {
-            "Estruct 1 -",
-            "Estruct 2 -",
-            "Estruct 3 -",
-            "Estruct 4 -",
-            "Estruct 5 -"
+            "Estruct 1  ",
+            "Estruct 2  ",
+            "Estruct 3  ",
+            "Estruct 4  ",
+            "Estruct 5  "
         };
 
         ResultadosExperimento resultados = new ResultadosExperimento();
